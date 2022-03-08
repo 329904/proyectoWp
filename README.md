@@ -4,6 +4,8 @@ Descripcion: Proyecto para la clase web platforms enero-junio 2022
 
 ## Funcionalidades del project manager
 
+![Proyecto Diagrama Clases](https://github.com/329904/proyectoWp/blob/main/DiagramaClasesProjectManager.png)
+
 ### Crear Proyecto o Modificarlo
     1. Solo el scrum master podra crear un proyecto
 
