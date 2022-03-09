@@ -1,8 +1,11 @@
 # PROJECT MANAGER 
 
-Descripcion: Proyecto para la clase web platforms enero-junio 2022
+* Descripcion: Proyecto para la clase web platforms enero-junio 2022
+* dockerhub: https://hub.docker.com/r/fr4nc1sc011/proyecto_wp
 
 ## Funcionalidades del project manager
+
+![Proyecto Diagrama Clases](https://github.com/329904/proyectoWp/blob/main/DiagramaClasesProjectManager.png)
 
 ### Crear Proyecto o Modificarlo
     1. Solo el scrum master podra crear un proyecto
