@@ -12,12 +12,14 @@ Contar con alguna versión de Docker, descargar el repositorio y desplegarlo en 
 ### Instalación
 
 Descargar las dependencias de NPM
-    npm install
+
+      npm install
 
 ## Ejecutando las pruebas
 
 Para correr el servidor, se utilizan los siguientes comandos en la terminal:
-    npm start
+
+      npm start
 
 ## Funcionalidades del project manager
 
