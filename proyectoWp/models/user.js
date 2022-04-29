@@ -10,10 +10,14 @@ var schema = new mongoose.Schema({
   _curp: String,
   _rfc: String,
   _address: String,
-  _skills: [{
-    type: mongoose.ObjectId,
-    ref: 'Skill'
-  }],
+  _skills: {
+    skillName: String,
+    rank: {
+      type: String,
+      enum: ['JUNIOR', 'SENIOR', 'MASTER'],
+      default: 'JUNIOR',
+    },
+  },
   _password: String,
   _salt: String
 

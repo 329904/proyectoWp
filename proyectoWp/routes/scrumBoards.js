@@ -1,5 +1,5 @@
 const express = require('express');
-const controller = require('../controllers/scrumMaster')
+const controller = require('../controllers/scrumBoards')
 const router = express.Router();
 
 router.get('/', controller.list);

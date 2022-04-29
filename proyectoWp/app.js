@@ -6,15 +6,25 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const scrumMasterRouter = require('./routes/scrumMaster');
-const proyectoRouter = require('./routes/proyecto');
-const productOwnerRouter = require('./routes/productOwner');
-const miembroProyectoRouter = require('./routes/miembroProyecto');
-const habilidadRouter = require('./routes/habilidad');
-const tarjetaRouter = require('./routes/tarjeta');
-const valorFibonacciRouter = require('./routes/valorFibonacci');
+const scrumBoardsRouter = require('./routes/scrumBoards');
+const projectsRouter = require('./routes/projects');
+const cardsRouter = require('./routes/cards');
+const backlogsRouter = require('./routes/backlogs');
+
+const uri = "mongodb://localhost:27017/proyecto-wp";
+mongoose.connect(uri);
+const db = mongoose.connection;
 
 var app = express();
+
+db.on('error', ()=>{
+  console.log("No se ha podido conectar a la base de datos");
+});
+
+db.on('open', ()=>{
+  console.log("conexion correcta");
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,13 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/scrumMaster', scrumMasterRouter);
-app.use('/proyecto', proyectoRouter);
-app.use('/productOwner', productOwnerRouter);
-app.use('/miembroProyecto', miembroProyectoRouter);
-app.use('/habilidad', habilidadRouter);
-app.use('/tarjeta', tarjetaRouter);
-app.use('/valorFibonacci', valorFibonacciRouter);
+app.use('/scrumBoards', scrumBoardsRouter);
+app.use('/projects', projectsRouter);
+app.use('/cards', cardsRouter);
+app.use('/backlogs', backlogsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
