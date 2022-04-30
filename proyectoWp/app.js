@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const config = require('config');
-const expressJtw= require('express-jwt');
+const expressJwt = require('express-jwt');
 const i18n = require('i18n');
 
 var indexRouter = require('./routes/index');
@@ -15,7 +15,9 @@ const projectsRouter = require('./routes/projects');
 const cardsRouter = require('./routes/cards');
 const backlogsRouter = require('./routes/backlogs');
 
-const uri = "mongodb://localhost:27017/proyecto-wp";
+const key = config.get("secret.key");
+
+const uri = config.get("dbChain");
 mongoose.connect(uri);
 const db = mongoose.connection;
 
@@ -33,7 +35,6 @@ i18n.configure({
   locales: ['en','es'],
   cookie: 'language',
   directory: path.join(__dirname, '/locales'),
-  objectNotation: true
 });
 
 // view engine setup
@@ -46,6 +47,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
+
+// TODO: uncomment this when we finish testing
+// app.use(
+//    expressJwt({
+//        secret: key,
+//        algorithms: ['HS256']
+//    }).unless({
+//        path: ['/login']
+//   })
+//);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
