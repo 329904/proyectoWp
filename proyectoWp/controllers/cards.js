@@ -2,6 +2,7 @@ const express = require('express');
 const Card = require('../models/card');
 
 function list(req, res, next){
+    // TODO: paginate?
     Card.find().then(objs => res.status(200).json({
         message: "Lista de tarjetas",
         obj: objs
@@ -14,10 +15,10 @@ function list(req, res, next){
 function index(req, res, next){
     const id = req.params.id;
     Card.findOne({"_id":id}).then(obj => res.status(200).json({
-        message: `Tarjeta con id ${id}.`,
+        message: res.__('ok.card'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: `no se pudo recuperar la tarjeta con id ${id}.`,
+        message: res.__('bad.card'),
         obj: ex
     }));
 }
@@ -35,11 +36,11 @@ function create(req, res, next){
     });
 
     card.save().then(obj => res.status(200).json({
-        message:'Tarjeta creada correctamente',
+        message: res.__('cr.card'),
         obj: obj
     }))
     .catch(ex => res.status(500).json({
-        message:'No se pudo almacenar la tarjeta',
+        message: res.__('ncr.card'),
         obj: ex
     }));
 }
@@ -57,10 +58,10 @@ function replace(req, res, next){
     });
 
     Card.findOneAndUpdate({"_id":id}, card).then(obj => res.status(200).json({
-        message: "Tarjeta reemplazada correctamente",
+        message: res.__('rp.card'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar la tarjeta",
+        message: res.__('nrp.card'),
         obj: ex
     }));
 }
@@ -84,10 +85,10 @@ function edit(req, res, next){
     }
 
     Card.findOneAndUpdate({"_id":id}, card).then(obj => res.status(200).json({
-        message: "Tarjeta reemplazada correctamente",
+        message: res.__('up.card'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar la tarjeta",
+        message: res.__('nup.card'),
         obj: ex
     }));
 }
@@ -95,10 +96,10 @@ function edit(req, res, next){
 function destroy(req, res, next){
     const id = req.params.id;
     Card.remove({"_id":id}).then(obj => res.status(200).json({
-        message: "Tarjeta eliminada correctamente",
+        message: res.__('dl.card'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo eliminar la tarjeta",
+        message: res.__('ndl.card'),
         obj: ex
     }));
 }

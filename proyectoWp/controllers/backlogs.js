@@ -2,6 +2,8 @@ const express = require('express');
 const Backlog = require('../models/backlog');
 
 function list(req, res, next){
+    // TODO: maybe paginate?
+    // we need to do that for this eval?
     Backlog.find().then(objs => res.status(200).json({
         message: "Backlogs",
         obj: objs
@@ -13,11 +15,12 @@ function list(req, res, next){
 
 function index(req, res, next){
     const id = req.params.id;
-    Backlog.findOne({"_id":id}).then(obj => res.status(200).json({
-        message: `Backlog con id ${id}.`,
+    Backlog.findOne({"_id":id}).populate('__cards')
+    .then(obj => res.status(200).json({
+        message: res.__('ok.backlog'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: `no se pudo recuperar el backlog con id ${id}.`,
+        message: res.__('bad.backlog'),
         obj: ex
     }));
 }
@@ -35,11 +38,11 @@ function create(req, res, next){
     });
 
     backlog.save().then(obj => res.status(200).json({
-        message:'Backlog creado correctamente',
+        message: res.__('cr.backlog'),
         obj: obj
     }))
     .catch(ex => res.status(500).json({
-        message:'No se pudo almacenar el backlog',
+        message: res.__('ncr.backlog'),
         obj: ex
     }));
 }
@@ -57,10 +60,10 @@ function replace(req, res, next){
     });
 
     Backlog.findOneAndUpdate({"_id":id}, backlog).then(obj => res.status(200).json({
-        message: "Backlog reemplazado correctamente",
+        message: res.__('rp.backlog'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar el backlog",
+        message: res.__('nrp.backlog'),
         obj: ex
     }));
 }
@@ -84,10 +87,10 @@ function edit(req, res, next){
     }
 
     Backlog.findOneAndUpdate({"_id":id}, backlog).then(obj => res.status(200).json({
-        message: "Backlog reemplazado correctamente",
+        message: res.__('up.backlog'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar el backlog",
+        message: res.__('nup.backlog'),
         obj: ex
     }));
 }
@@ -95,10 +98,10 @@ function edit(req, res, next){
 function destroy(req, res, next){
     const id = req.params.id;
     Backlog.remove({"_id":id}).then(obj => res.status(200).json({
-        message: "Backlog eliminado correctamente",
+        message: res.__('dl.backlog'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo eliminar el backlog",
+        message: res.__('ndl.backlog'),
         obj: ex
     }));
 }

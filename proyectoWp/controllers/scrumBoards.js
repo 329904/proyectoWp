@@ -2,6 +2,7 @@ const express = require('express');
 const ScrumBoard = require('../models/scrumBoard');
 
 function list(req, res, next){
+    // TODO: paginate?
     ScrumBoard.find().then(objs => res.status(200).json({
         message: "Tableros Scrum",
         obj: objs
@@ -14,10 +15,10 @@ function list(req, res, next){
 function index(req, res, next){
     const id = req.params.id;
     ScrumBoard.findOne({"_id":id}).then(obj => res.status(200).json({
-        message: `Tablero con id ${id}.`,
+        message: res.__('ok.board'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: `no se pudo recuperar el tablero con id ${id}.`,
+        message: res.__('bad.board'),
         obj: ex
     }));
 }
@@ -35,11 +36,11 @@ function create(req, res, next){
     });
 
     scrumBoard.save().then(obj => res.status(200).json({
-        message:'Tablero creado correctamente',
+        message: res.__('cr.board'),
         obj: obj
     }))
     .catch(ex => res.status(500).json({
-        message:'No se pudo almacenar el tablero',
+        message: res.__('ncr.board'),
         obj: ex
     }));
 }
@@ -57,10 +58,10 @@ function replace(req, res, next){
     });
 
     ScrumBoard.findOneAndUpdate({"_id":id}, scrumBoard).then(obj => res.status(200).json({
-        message: "Tablero reemplazado correctamente",
+        message: res.__('rp.board'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar el tablero",
+        message: res.__('nrp.board'),
         obj: ex
     }));
 }
@@ -84,10 +85,10 @@ function edit(req, res, next){
     }
 
     ScrumBoard.findOneAndUpdate({"_id":id}, scrumBoard).then(obj => res.status(200).json({
-        message: "Tablero reemplazado correctamente",
+        message: res.__('up.board'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar el tablero",
+        message: res.__('nup.board'),
         obj: ex
     }));
 }
@@ -95,10 +96,10 @@ function edit(req, res, next){
 function destroy(req, res, next){
     const id = req.params.id;
     ScrumBoard.remove({"_id":id}).then(obj => res.status(200).json({
-        message: "Tablero eliminado correctamente",
+        message: res.__('dl.board'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo eliminar el tablero",
+        message: res.__('ndl.board'),
         obj: ex
     }));
 }

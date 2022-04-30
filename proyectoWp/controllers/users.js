@@ -1,4 +1,6 @@
 const express = require('express');
+const async = require('async');
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 function list(req, res, next){
@@ -14,10 +16,10 @@ function list(req, res, next){
 function index(req, res, next){
     const id = req.params.id;
     User.findOne({"_id":id}).then(obj => res.status(200).json({
-        message: `Usuario con id ${id}.`,
+        message: res.__('ok.user'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: `No se pudo recuperar el usuario con id ${id}.`,
+        message: res.__('bad.user'),
         obj: ex
     }));
 }
@@ -35,26 +37,32 @@ function create(req, res, next){
     skills.skillName = req.body.skillName;
     skills.rank = req.body.rank;
 
-    let user = new User({
-        name:name,
-        lastName:lastName,
-        bornDate:bornDate,
-        address:address,
-        curp:curp,
-        rfc:rfc,
-        password:password,
-        skills:skills,
-        salt: ""
+    async.parallel({
+        salt: (callback) => bcrypt.genSalt(10, callback)
+    }, (err, result) => {
+    bcrypt.hash(password, result.salt, (err, hash) => {
+      const user = new User({
+        name: name,
+        lastName: lastName,
+        bornDate: bornDate,
+        curp: curp,
+        rfc: rfc,
+        address: address,
+        skills: skills,
+        password: hash,
+        salt: result.salt
+      });
+      user.save()
+      .then(obj => res.status(200).json({
+        message: res.__('cr.user'),
+        data: obj
+      }))
+      .catch(err => res.status(500).json({
+        message: res.__('ncr.user'),
+        data: err
+      }));
     });
-
-    user.save().then(obj => res.status(200).json({
-        message:'Usuario creado correctamente',
-        obj: obj
-    }))
-    .catch(ex => res.status(500).json({
-        message:'No se pudo almacenar el usuario',
-        obj: ex
-    }));
+  });
 }
 
 function replace(req, res, next){
@@ -78,10 +86,10 @@ function replace(req, res, next){
     });
 
     User.findOneAndUpdate({"_id":id}, user).then(obj => res.status(200).json({
-        message: "Usuario reemplazado correctamente",
+        message: res.__('rp.user'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar el usuario",
+        message: res.__('nrp.user'),
         obj: ex
     }));
 }
@@ -121,10 +129,10 @@ function edit(req, res, next){
     }
 
     User.findOneAndUpdate({"_id":id}, user).then(obj => res.status(200).json({
-        message: "Usuario reemplazado correctamente",
+        message: res.__('up.user'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo reemplazar el usuario",
+        message: res.__('nup.user'),
         obj: ex
     }));
 }
@@ -132,10 +140,10 @@ function edit(req, res, next){
 function destroy(req, res, next){
     const id = req.params.id;
     User.remove({"_id":id}).then(obj => res.status(200).json({
-        message: "Usuario eliminado correctamente",
+        message: res.__('dl.user'),
         obj: obj
     })).catch(ex => res.status(500).json({
-        message: "No se pudo eliminar el usuario",
+        message: res.__('ndl.user'),
         obj: ex
     }));
 }
