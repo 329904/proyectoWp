@@ -2,6 +2,7 @@
 
 * Descripcion: Proyecto para la clase web platforms enero-junio 2022
 * dockerhub: https://hub.docker.com/r/fr4nc1sc011/proyecto_wp
+* heroku: https://proyectowp-2022.herokuapp.com/
 
 ## Comenzando
 
