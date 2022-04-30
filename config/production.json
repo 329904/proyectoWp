@@ -1,0 +1,5 @@
+{
+  "database": {
+    "uri": "mongodb+srv://admin:admin@proyectowp2022.djrcr.mongodb.net/proyectowp?retryWrites=true&w=majority"
+  }
+}

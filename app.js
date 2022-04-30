@@ -17,7 +17,7 @@ const backlogsRouter = require('./routes/backlogs');
 
 const key = config.get("secret.key");
 
-const uri = config.get("dbChain");
+const uri = config.get("database.uri");
 mongoose.connect(uri);
 const db = mongoose.connection;
 
