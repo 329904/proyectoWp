@@ -28,7 +28,7 @@ function create(req, res, next){
     const priority = req.body.priority;
     const size = req.body.size;
 
-    let card = new Project({
+    let card = new Card({
         name:name,
         priority:priority,
         size:size,
