@@ -3,13 +3,19 @@ const Card = require('../models/card');
 
 function list(req, res, next){
     // TODO: paginate?
-    Card.find().then(objs => res.status(200).json({
-        message: "Lista de tarjetas",
-        obj: objs
-    })).catch(ex => res.status(500).json({
-        message: "No se pudo consultar la lista de tarjetas",
-        obj: ex
-    }));
+    // Card.find().then(objs => res.status(200).json({
+    //    message: "Lista de tarjetas",
+    //    obj: objs
+    // })).catch(ex => res.status(500).json({
+    //    message: "No se pudo consultar la lista de tarjetas",
+    //    obj: ex
+    // }));
+  let page = req.params.page ? req.params.page : 1;
+
+  // TODO: move limit to config
+  Card.paginate({}, {page:page, limit: 5})
+       .then(objs => res.render("card/list", {cards: objs}));
+
 }
 
 function index(req, res, next){
@@ -23,22 +29,36 @@ function index(req, res, next){
     }));
 }
 
+function add(req, res, next) {
+    res.render('card/add', {});
+}
+
 function create(req, res, next){
-    const name = req.body.name;
+    const narrative = req.body.narrative;
+    const rol = req.body.rol;
+    const functionality = req.body.functionality;
+    const benefit = req.body.benefit;
+    const criteria = req.body.criteria;
+    const context = req.body.context;
+    const events = req.body.events;
+    const results = req.body.results;
     const priority = req.body.priority;
     const size = req.body.size;
 
     let card = new Card({
-        name:name,
+        narrative:narrative,
+        rol:rol,
+        functionality:functionality,
+        benefit:benefit,
+        criteria:criteria,
+        context:context,
+        events:events,
+        results:results,
         priority:priority,
         size:size,
-
     });
 
-    card.save().then(obj => res.status(200).json({
-        message: res.__('cr.card'),
-        obj: obj
-    }))
+    card.save().then(obj => res.redirect ('cards/'))
     .catch(ex => res.status(500).json({
         message: res.__('ncr.card'),
         obj: ex
@@ -105,5 +125,5 @@ function destroy(req, res, next){
 }
 
 module.exports = {
-    list, index, create, replace, edit, destroy
+    list, index, add, create, replace, edit, destroy
 };

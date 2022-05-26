@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+      h1 Listado de Tarjetas
+      table
+        thead
+            tr
+                th Narrativa de la Historia
+                th Como
+                th Quiero
+                th De tal Manera
+                th Criterios de Aceptacion
+                th Dado
+                th Cuando
+                th Entonces
+                th
+                    a(href="/cards/add") Nuevo
+        tbody
+            each card in cards.docs
+                tr
+                    td= card.narrative
+                    td= card.rol
+                    td= card.functionality
+                    td= card.benefit
+                    td= card.criteria
+                    td= card.context
+                    td= card.events
+                    td= card.results
+                    td
+                        a(href='#') Editar
+                        form(method='POST')
+                            input(type='submit' action=`/cards/${card.id}?_method=DELETE`)
+
+        a(href="/cards/1") <<
+        if cards.hasPrevPage
+            a(href=`/cards/${cards.prevPage}`) <
+        if cards.hasNextPage
+            a(href=`/cards/${cards.nextPage}`) >
+        a(href=`/cards/${cards.totalPages}`) >>

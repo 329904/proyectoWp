@@ -2,6 +2,8 @@ const express = require('express');
 const controller = require('../controllers/cards')
 const router = express.Router();
 
+router.get('/add', controller.add);
+
 router.get('/', controller.list);
 
 router.get('/:id/', controller.index);

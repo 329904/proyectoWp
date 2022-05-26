@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const expressJwt = require('express-jwt');
 const i18n = require('i18n');
+//const firebase = require('firebase');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -14,6 +15,17 @@ const scrumBoardsRouter = require('./routes/scrumBoards');
 const projectsRouter = require('./routes/projects');
 const cardsRouter = require('./routes/cards');
 const backlogsRouter = require('./routes/backlogs');
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDypKrzkxoOmJM4ZSMBhpL0-DIWnySnEkk",
+  authDomain: "proyectowp-82c4c.firebaseapp.com",
+  projectId: "proyectowp-82c4c",
+  storageBucket: "proyectowp-82c4c.appspot.com",
+  messagingSenderId: "126639715988",
+  appId: "1:126639715988:web:9c9bf6458897f817712681"
+};
+
+//const app = initializeApp(firebaseConfig);
 
 const key = config.get("secret.key");
 

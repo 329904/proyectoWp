@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+      h1 Nueva Tarjeta
+      form(method='POST', action='/cards')
+        label(laberFor='narrative') Narrativa de la Historia:
+        input(type='text', name='narrative', id='narrative')
+        label(laberFor='rol') Como:
+        input(type='text', name='rol', id='rol')
+        label(laberFor='functionality') Quiero:
+        input(type='text', name='functionality', id='functionality')
+        label(laberFor='benefit') De Tal Manera:
+        input(type='text', name='benefit', id='benefit')
+        label(laberFor='criteria') Criterios de Aceptacion:
+        input(type='text', name='criteria', id='criteria')
+        label(laberFor='context') Dado:
+        input(type='text', name='context', id='context')
+        label(laberFor='events') Cuando:
+        input(type='text', name='events', id='events')
+        label(laberFor='results') Entonces:
+        input(type='text', name='results', id='results')
+        label(laberFor='priority') Prioridad:
+        input(type='text', name='priority', id='priority')
+        label(laberFor='size') Tamano:
+        input(type='text', name='size', id='size')
+        input(type='submit')
