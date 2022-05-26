@@ -13,6 +13,8 @@ block content
                 th Dado
                 th Cuando
                 th Entonces
+                th Prioridad
+                th Tamaño
                 th
                     a(href="/cards/add") Nuevo
         tbody
@@ -26,6 +28,8 @@ block content
                     td= card.context
                     td= card.events
                     td= card.results
+                    td= card.priority
+                    td= card.size
                     td
                         a(href='#') Editar
                         form(method='POST')

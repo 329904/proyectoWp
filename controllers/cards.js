@@ -45,6 +45,10 @@ function create(req, res, next){
     const priority = req.body.priority;
     const size = req.body.size;
 
+    if (!isFib(size)) {
+        return res.status(400).send("El Tamaño no es numero Fibonacci");
+    }
+
     let card = new Card({
         narrative:narrative,
         rol:rol,
@@ -122,6 +126,19 @@ function destroy(req, res, next){
         message: res.__('ndl.card'),
         obj: ex
     }));
+}
+
+// La explicacion de el funcionamiento sobre como verificamos si es fibonacci:
+// http://www.geeksforgeeks.org/check-number-fibonacci-number/
+function isFib(num) {
+    if (isSquare(5*(num*num)-4) || isSquare(5*(num*num)+4)) {
+       return true;
+    } else { return false; }
+}
+
+function isSquare(x) {
+    let s = parseInt(Math.sqrt(x));
+    return (s * s == x);
 }
 
 module.exports = {
