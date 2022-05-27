@@ -119,10 +119,8 @@ function edit(req, res, next){
 
 function destroy(req, res, next){
     const id = req.params.id;
-    Card.remove({"_id":id}).then(obj => res.status(200).json({
-        message: res.__('dl.card'),
-        obj: obj
-    })).catch(ex => res.status(500).json({
+    Card.remove({"_id":id}).then(obj => res.redirect("/cards/"))
+    .catch(ex => res.status(500).json({
         message: res.__('ndl.card'),
         obj: ex
     }));
