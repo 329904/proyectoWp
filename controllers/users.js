@@ -4,10 +4,10 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 function list(req, res, next){
-    User.find().then(objs => res.status(200).json({
-        message: "Lista de usuarios registrados",
-        obj: objs
-    })).catch(ex => res.status(500).json({
+    let page = req.params.page ? req.params.page : 1;
+    User.paginate({}, {page:page, limit: 5})
+    .then(objs => res.render("user/list", {users:objs}))
+    .catch(ex => res.status(500).json({
         message: "No se pudo consultar la lista de usuarios",
         obj: ex
     }));
@@ -22,6 +22,10 @@ function index(req, res, next){
         message: res.__('bad.user'),
         obj: ex
     }));
+}
+
+function add(req, res, next){
+    res.render('user/add', {});
 }
 
 function create(req, res, next){
@@ -149,5 +153,5 @@ function destroy(req, res, next){
 }
 
 module.exports = {
-    list, index, create, replace, edit, destroy
+    list, index, add, create, replace, edit, destroy
 };

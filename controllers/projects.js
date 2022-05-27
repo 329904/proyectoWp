@@ -1,12 +1,13 @@
+const config = require('config');
 const express = require('express');
 const Project = require('../models/project');
 
 function list(req, res, next){
     // TODO: paginate?
-    Project.find().then(objs => res.status(200).json({
-        message: "Lista de proyectos",
-        obj: objs
-    })).catch(ex => res.status(500).json({
+    let page = req.params.page ? req.params.page : 1;
+    Project.paginate({}, {page:page, limit: 5})
+    .then(objs => res.render("project/list", {projects:objs}))
+    .catch(ex => res.status(500).json({
         message: "No se pudo consultar la lista de proyectos",
         obj: ex
     }));
@@ -23,10 +24,14 @@ function index(req, res, next){
     }));
 }
 
+function add(req, res, next){
+    res.render('project/add', {});
+}
+
 function create(req, res, next){
     const name = req.body.name;
-    const start_date = req.body.start_date;
-    const end_date = req.body.end_date;
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
     const productOwner = req.body.productOwner;
     const scrumMaster = req.body.scrumMaster;
     const team = req.body.team;
@@ -35,12 +40,11 @@ function create(req, res, next){
 
     let project = new Project({
         name:name,
-        start_date:start_date,
-        end_date:end_date,
+        startDate:startDate,
+        endDate:endDate,
         productOwner:productOwner,
         scrumMaster:scrumMaster,
         team:team,
-        board:board,
         board:board,
         description:description
     });
@@ -58,8 +62,8 @@ function create(req, res, next){
 function replace(req, res, next){
     const id = req.params.id;
     let name = req.body.name ? req.body.name : "";
-    let start_date = req.body.start_date ? req.body.start_date : "";
-    let end_date = req.body.end_date ? req.body.end_date : "";
+    let startDate = req.body.startDate ? req.body.startDate : "";
+    let endDate = req.body.endDate ? req.body.endDate : "";
     let productOwner = req.body.productOwner ? req.body.productOwner : "";
     let scrumMaster = req.body.scrumMaster ? req.body.scrumMaster : "";
     let team = req.body.team ? req.body.team : "";
@@ -68,8 +72,8 @@ function replace(req, res, next){
 
     let project = new Object({
         _name : name,
-        _start_date : start_date,
-        _end_date : end_date,
+        _startDate : startDate,
+        _endDate : endDate,
         _productOwner : productOwner,
         _scrumMaster : scrumMaster,
         _team : team,
@@ -89,8 +93,8 @@ function replace(req, res, next){
 function edit(req, res, next){
     const id = req.params.id;
     let name = req.body.name;
-    let start_date = req.body.start_date;
-    let end_date = req.body.end_date;
+    let startDate = req.body.startDate;
+    let endDate = req.body.endDate;
     let productOwner = req.body.productOwner;
     let scrumMaster = req.body.scrumMaster;
     let team = req.body.team;
@@ -102,11 +106,11 @@ function edit(req, res, next){
     if(name){
         project._name = name;
     }
-    if(start_date){
-        project._start_date = start_date;
+    if(startDate){
+        project._startDate = startDate;
     }
-    if(end_date){
-        project._end_date = end_date;
+    if(endDate){
+        project._endDate = endDate;
     }
     if(productOwner){
         project._productOwner = productOwner;
@@ -145,5 +149,5 @@ function destroy(req, res, next){
 }
 
 module.exports = {
-    list, index, create, replace, edit, destroy
+    list, index, add, create, replace, edit, destroy
 };

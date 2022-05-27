@@ -1,10 +1,13 @@
 const express = require('express');
 const controller = require('../controllers/projects')
 const router = express.Router();
+const { schema } = require('../models/project');
 
-router.get('/', controller.list);
+router.get('/add', controller.add);
 
-router.get('/:id/', controller.index);
+router.get('/:page?', controller.list);
+
+router.get('/show/:id/', controller.index);
 
 router.post('/', controller.create);
 

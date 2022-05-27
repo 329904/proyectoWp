@@ -2,9 +2,11 @@ const express = require('express');
 const controller = require('../controllers/users')
 const router = express.Router();
 
-router.get('/', controller.list);
+router.get('/add', controller.add);
 
-router.get('/:id', controller.index);
+router.get('/:page?', controller.list);
+
+router.get('/show/:id', controller.index);
 
 router.post('/', controller.create);
 

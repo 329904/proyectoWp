@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+      h1 Nuevo Proyecto
+      form(method='POST', action='/projects')
+        label(laberFor='name') Nombre del proyecto:
+        input(type='text', name='name', id='name')
+        label(laberFor='description') Descripcion:
+        input(type='text', name='description', id='description')
+        label(laberFor='startDate') Fecha de inicio:
+        input(type='text', name='startDate', id='startDate')
+        label(laberFor='endDate') Fecha de finalizacion:
+        input(type='text', name='endDate', id='endDate')
+        label(laberFor='productOwner') Product Owner:
+        input(type='text', name='productOwner', id='productOwner')
+        label(laberFor='scrumMaster') Scrum Master:
+        input(type='text', name='scrumMaster', id='scrumMaster')
+        label(laberFor='team') Equipo:
+        input(type='text', name='team', id='team')
+        label(laberFor='board') Tabla:
+        input(type='text', name='board', id='board')
+        input(type='submit')

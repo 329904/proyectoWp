@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+      h1 Nuevo Usuario
+      form(method='POST', action='/users')
+        label(laberFor='name') Nombre:
+        input(type='text', name='name', id='name')
+        label(laberFor='lastName') Apellido:
+        input(type='text', name='lastName', id='lastName')
+        label(laberFor='bornDate') Fecha de nacimiento  :
+        input(type='text', name='bornDate', id='bornDate')
+        label(laberFor='curp') Curp:
+        input(type='text', name='curp', id='curp')
+        label(laberFor='rfc') RFC:
+        input(type='text', name='rfc', id='rfc')
+        label(laberFor='address') Direccion:
+        input(type='text', name='address', id='address')
+        label(laberFor='skillName') Nombre de habilidad:
+        input(type='text', name='skillName', id='skillName')
+        label(laberFor='rank') Nivel de habilidad:
+        input(type='text', name='rank', id='rank')
+        input(type='submit')

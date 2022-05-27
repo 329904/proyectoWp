@@ -1,0 +1,37 @@
+extends ../layout
+
+block content 
+    h1 Usuarios
+    table
+        thead
+            tr
+                th Id de usuario
+                th Nombre
+                th Apellido
+                th Fecha de nacimiento  
+                th Curp
+                th RFC
+                th Direccion 
+                th Habilidades
+                th
+                    a(href="/users/add") Nuevo
+                
+        tbody
+            each user in users.docs
+                tr
+                    td= user.id
+                    td= user.name
+                    td= user.lastName 
+                    td= user.bornDate
+                    td= user.curp
+                    td= user.rfc
+                    td= user.address
+                    td= user.skills
+                    
+
+        a(href="/users/1") <<
+        if users.hasPrevPage
+            a(href=`/users/${users.prevPage}`) <
+        if users.hasNextPage
+            a(href=`/users/${users.nextPage}`) >
+        a(href=`/users/${users.totalPages}`) >>

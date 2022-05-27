@@ -1,0 +1,38 @@
+extends ../layout
+
+block content 
+    h1 Proyectos
+    table
+        thead
+            tr
+                th Id del proyecto  
+                th Nombre del proyecto  
+                th Descripcion  
+                th Fecha de inicio   
+                th Fecha de finalizacion  
+                th Product owner  
+                th Scrum master   
+                th Equipo   
+                th Tabla   
+                th
+                    a(href="/projects/add") Nuevo
+                
+        tbody
+            each project in projects.docs
+                tr
+                    td= project.id
+                    td= project.name 
+                    td= project.description
+                    td= project.startDate
+                    td= project.endDate
+                    td= project.productOwner
+                    td= project.scrumMaster
+                    td= project.team
+                    td= project.board 
+
+        a(href="/projects/1") <<
+        if projects.hasPrevPage
+            a(href=`/projects/${projects.prevPage}`) <
+        if projects.hasNextPage
+            a(href=`/projects/${projects.nextPage}`) >
+        a(href=`/projects/${projects.totalPages}`) >>

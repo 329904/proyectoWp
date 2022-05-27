@@ -53,6 +53,10 @@ class Project {
     this._startDate = v;
   }
 
+  set endDate(v) {
+    this._endDate = v;
+  }
+
   set description(v) {
     this._description = v;
   }
@@ -87,6 +91,10 @@ class Project {
 
   get startDate() {
     return this._startDate;
+  }
+
+  get endDate() {
+    return this._endDate;
   }
 
   get description() {
