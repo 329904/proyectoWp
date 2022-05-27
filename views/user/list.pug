@@ -27,7 +27,9 @@ block content
                     td= user.rfc
                     td= user.address
                     td= user.skills
-                    
+                    td 
+                        form(method='POST' action=`/users/${user.id}?_method=DELETE`)
+                            button(type='submit') Eliminar usuario
 
         a(href="/users/1") <<
         if users.hasPrevPage

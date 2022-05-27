@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const expressJwt = require('express-jwt');
 const i18n = require('i18n');
+const methodOverride = require('method-override');
 //const firebase = require('firebase');
 
 var indexRouter = require('./routes/index');
@@ -59,6 +60,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(i18n.init);
+app.use(methodOverride('_method'));
 
 // TODO: uncomment this when we finish testing
 // app.use(

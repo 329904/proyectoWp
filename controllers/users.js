@@ -57,10 +57,7 @@ function create(req, res, next){
         salt: result.salt
       });
       user.save()
-      .then(obj => res.status(200).json({
-        message: res.__('cr.user'),
-        data: obj
-      }))
+      .then(obj => res.redirect('users/'))
       .catch(err => res.status(500).json({
         message: res.__('ncr.user'),
         data: err
@@ -143,10 +140,8 @@ function edit(req, res, next){
 
 function destroy(req, res, next){
     const id = req.params.id;
-    User.remove({"_id":id}).then(obj => res.status(200).json({
-        message: res.__('dl.user'),
-        obj: obj
-    })).catch(ex => res.status(500).json({
+    User.remove({"_id":id}).then(obj => res.redirect("/users/"))
+    .catch(ex => res.status(500).json({
         message: res.__('ndl.user'),
         obj: ex
     }));

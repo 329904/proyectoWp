@@ -49,10 +49,7 @@ function create(req, res, next){
         description:description
     });
 
-    project.save().then(obj => res.status(200).json({
-        message: res.__('cr.project'),
-        obj: obj
-    }))
+    project.save().then(obj => res.redirect('projects/'))
     .catch(ex => res.status(500).json({
         message: res.__('ncr.project'),
         obj: ex
@@ -139,10 +136,8 @@ function edit(req, res, next){
 
 function destroy(req, res, next){
     const id = req.params.id;
-    Project.remove({"_id":id}).then(obj => res.status(200).json({
-        message: res.__('dl.project'),
-        obj: obj
-    })).catch(ex => res.status(500).json({
+    Project.remove({"_id":id}).then(obj => res.redirect("/projects/"))
+    .catch(ex => res.status(500).json({
         message: res.__('ndl.project'),
         obj: ex
     }));

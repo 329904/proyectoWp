@@ -13,7 +13,6 @@ block content
                 th Product owner  
                 th Scrum master   
                 th Equipo   
-                th Tabla   
                 th
                     a(href="/projects/add") Nuevo
                 
@@ -28,8 +27,9 @@ block content
                     td= project.productOwner
                     td= project.scrumMaster
                     td= project.team
-                    td= project.board 
-
+                    td 
+                        form(method='POST' action=`/projects/${project.id}?_method=DELETE`)
+                            button(type='submit') Cerrar proyecto
         a(href="/projects/1") <<
         if projects.hasPrevPage
             a(href=`/projects/${projects.prevPage}`) <
